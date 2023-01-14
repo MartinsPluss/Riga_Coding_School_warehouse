@@ -1,13 +1,16 @@
 import mysql.connector as mysql
 from tkinter import *
+from tkinter import ttk
 
 
 class Db:
 
     def __init__(self):
         self.root = Tk()
-        self.root.geometry("900x500+700+500")  # Martins
+        self.root.geometry("1000x500+700+500")  # Martins
         self.root.title("Gramatu noliktava")  # Martins
+        frm = ttk.Frame(self.root, padding=10)
+        frm.grid()
 
         self.conn = mysql.connect(
             host="localhost",
@@ -32,19 +35,19 @@ class Db:
         self.column3_label.grid(row=2, column=0)
         self.column3_input.grid(row=2, column=1)
 
-        self.insert_button = Button(
+        self.insert_button = ttk.Button(
             self.root, text="Ievietot", command=self.insert)
         self.insert_button.grid(row=3, column=4)  # Martins
 
-        self.update_button = Button(
+        self.update_button = ttk.Button(
             self.root, text="Labot", command=self.update_database)
         self.update_button.grid(row=3, column=5)
 
-        self.view_button = Button(
+        self.view_button = ttk.Button(
             self.root, text="Apskatīt", command=self.view)
         self.view_button.grid(row=3, column=6)
 
-        self.delete_button = Button(
+        self.delete_button = ttk.Button(
             self.root, text="Izdzēst", command=self.delete_item)
         self.delete_button.grid(row=3, column=7)
 
@@ -52,10 +55,8 @@ class Db:
             self.root.destroy()
 
         # Create a Button to call close()
-        quit_button = Button(self.root, text="Beigt darbu", command=close)
+        quit_button = ttk.Button(self.root, text="Beigt darbu", command=close)
         quit_button.grid(row=6, column=7)
-        quit_button.config(fg="black", bg="gray75")
-
         self.root.mainloop()
 
     def insert(self):
@@ -100,7 +101,7 @@ class Db:
             results_text.insert(END, result)
             results_text.insert(END, "\n")
 
-        # Position the Text widget on the window
+        # Position the Text widget on the window # Martins
         results_text.grid(row=4, columnspan=2)
 
     def delete_item(self):
