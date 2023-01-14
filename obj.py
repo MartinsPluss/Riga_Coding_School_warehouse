@@ -1,6 +1,8 @@
+import re
 import mysql.connector as mysql
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 
 
 class Db:
@@ -59,11 +61,26 @@ class Db:
         quit_button.grid(row=6, column=7)
         self.root.mainloop()
 
+    def is_valid_title(self, input_string):
+        return bool(re.match(r'^[a-zA-Z0-9\s]+$', input_string))
+
+    def is_number(self, input_string):
+        return bool(re.match(r'^\d+$', input_string))
+
     def insert(self):
 
         # Get the values from the input fields
-        title = self.column1_input.get()
-        number = self.column2_input.get()
+
+        if self.is_valid_title(self.column1_input.get().strip()):
+            title = self.column1_input.get().strip()
+        else:
+            messagebox.showerror("Error", "Title input is not valid") 
+
+        if self.is_number(self.column2_input.get().strip()):
+            number = int(self.column2_input.get().strip())
+        else:
+            messagebox.showerror("Error", "Number input is not valid")
+
         description = self.column3_input.get()
 
         insert = "INSERT INTO warehouse (title, number, description) VALUES(%s,%s,%s)"
@@ -74,15 +91,19 @@ class Db:
 
     def update_database(self):
 
-        title = self.column1_input.get()
-        number = self.column2_input.get()
+        title = self.column1_input.get().strip()
+
+        if self.is_number(self.column2_input.get().strip()):
+            number = int(self.column2_input.get().strip())
+        else:
+            messagebox.showerror("Error", "Number input is not valid")
+
         description = self.column3_input.get()
 
         update = "UPDATE warehouse SET number = %s WHERE title = %s"
         values = (number, title)
         self.cursor.execute(update, values)
 
-        # self.column2_input.cursor.execute("UPDATE warehouse SET number = %s, description=%s WHERE title=%s", (number, description, title))
         print("Updated")
         self.conn.commit()
 
@@ -97,8 +118,10 @@ class Db:
 
         results_text = Text(self.root)
 
+        # The code below formats the output and gets rid of the curly brackets
         for result in results:
-            results_text.insert(END, result)
+            result_str = [str(field) if not isinstance(field, str) else field.replace("{", "").replace("}", "") for field in result]
+            results_text.insert(END, " ".join(result_str))
             results_text.insert(END, "\n")
 
         # Position the Text widget on the window # Martins
