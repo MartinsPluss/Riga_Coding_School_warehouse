@@ -6,7 +6,7 @@ class Db:
 
     def __init__(self):
         self.root = Tk()
-        self.root.geometry("1000x500+700+500")  # Martins
+        self.root.geometry("900x500+700+500")  # Martins
         self.root.title("Gramatu noliktava")  # Martins
 
         self.conn = mysql.connect(
