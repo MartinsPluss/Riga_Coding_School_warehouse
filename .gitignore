@@ -1,0 +1,3 @@
+# ignore these folders, please
+__pycache__/
+venv/
