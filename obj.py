@@ -88,6 +88,8 @@ class Db:
         self.cursor.execute(insert, values)
         self.conn.commit()
         print("New records added")
+        
+        self.view()
 
     def update_database(self):
 
@@ -106,10 +108,12 @@ class Db:
 
         print("Updated")
         self.conn.commit()
+        
+        self.view()
 
         # # Update the button text to indicate that the update was successful
         # update_button.config(text="Update Successful!")
-
+        
     def view(self):
 
         view = "SELECT title, number, description FROM warehouse"  # Martins
@@ -136,6 +140,7 @@ class Db:
         self.conn.commit()
         print("Deleted")  # Martins
 
+        self.view()
 
 if __name__ == '__main__':
     db = Db()
