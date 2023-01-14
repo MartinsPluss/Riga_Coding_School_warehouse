@@ -14,18 +14,12 @@ class Db:
         frm = ttk.Frame(self.root, padding=10)
         frm.grid()
 
-        # self.conn = mysql.connect(
-        #     host="localhost",
-        #     user="root",
-        #     database="test",
-        #     password="qwerty123"
-        # )
-
         self.conn = mysql.connect(
-                    host="localhost",
-                    user = "aaaaa",
-                    database="test"
-                    )
+            host="localhost",
+            user="root",
+            database="test",
+            password="qwerty123"
+        )
         self.cursor = self.conn.cursor()
 
         self.column1_input = Entry(self.root)
