@@ -60,10 +60,9 @@ class Db:
         self.quit_button.grid(row=6, column=6, padx=20, pady=20)
 
         self.app.mainloop()
-        self.view
 
     def is_valid_title(self, input_string):
-        return bool(re.match(r'^[a-zA-Z0-9\s]+$', input_string))
+        return bool(re.match(r'^[A-Za-z0-9\sĀČĢĶĻŅŠŪŽāčģīķļņšūž]+$', input_string))
 
     def is_number(self, input_string):
         return bool(re.match(r'^\d+$', input_string))
@@ -75,12 +74,12 @@ class Db:
         if self.is_valid_title(self.column1_input.get().strip()):
             title = self.column1_input.get().strip()
         else:
-            messagebox.showerror("Error", "Title input is not valid")
+            messagebox.showerror("Kļūda", "Nosaukums nav derīgs")
 
         if self.is_number(self.column2_input.get().strip()):
             number = int(self.column2_input.get().strip())
         else:
-            messagebox.showerror("Error", "Number input is not valid")
+            messagebox.showerror("Kļūda", "Skaits nav derīgs")
 
         description = self.column3_input.get()
 
@@ -99,7 +98,7 @@ class Db:
         if self.is_number(self.column2_input.get().strip()):
             number = int(self.column2_input.get().strip())
         else:
-            messagebox.showerror("Error", "Number input is not valid")
+            messagebox.showerror("Kļūda", "Skaits nav derīgs")
 
         description = self.column3_input.get()
 
@@ -116,22 +115,40 @@ class Db:
         # update_button.config(text="Update Successful!")
 
     def view(self):
-
         view = "SELECT title, number, description FROM warehouse"  # Martins
         self.cursor.execute(view)
         results = self.cursor.fetchall()
 
-        results_text = Text(self.app)
+        # Create separate Label and Text widgets for each field
+        title_label = Label(self.app, text="Nosaukums")
+        title_label.grid(row=4, column=4)
 
-        # The code below formats the output and gets rid of the curly brackets
+        results_text_title = Text(self.app, width=70)
+        results_text_title.grid(row=5, column=4, padx=0, pady=0)
+
+        number_label = Label(self.app, text="Skaits")
+        number_label.grid(row=4, column=5)
+
+        results_text_number = Text(self.app, width=50)
+        results_text_number.grid(row=5, column=5, padx=5, pady=5)
+
+        description_label = Label(self.app, text="Apraksts")
+        description_label.grid(row=4, column=6)
+
+        results_text_description = Text(self.app, width=130)
+        results_text_description.grid(row=5, column=6, padx=0, pady=0)
+
         for result in results:
-            result_str = [str(field) if not isinstance(field, str) else field.replace(
-                "{", "").replace("}", "") for field in result]
-            results_text.insert(END, " ".join(result_str))
-            results_text.insert(END, "\n")
+            results_text_title.insert(END, result[0])
+            results_text_title.insert(END, "\n")
+            results_text_number.insert(END, result[1])
+            results_text_number.insert(END, "\n")
+            results_text_description.insert(END, result[2])
+            results_text_description.insert(END, "\n")
 
-        # Position the Text widget on the window # Martins
-        results_text.grid(row=5, column=4, sticky=NW)
+        self.app.columnconfigure(4, weight=1, minsize=50)
+        self.app.columnconfigure(5, weight=1, minsize=50)
+        self.app.columnconfigure(6, weight=1, minsize=50)
 
     def delete_item(self):
 
