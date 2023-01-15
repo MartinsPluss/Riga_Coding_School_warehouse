@@ -63,7 +63,7 @@ class Db:
 
     def is_valid_title(self, input_string):
         return bool(re.match(r'^[A-Za-z0-9\sĀČĢĶĻŅŠŪŽāčģīķļņšūž]+$', input_string))
-       
+
     def is_number(self, input_string):
         return bool(re.match(r'^\d+$', input_string))
 
@@ -113,7 +113,6 @@ class Db:
 
         # # Update the button text to indicate that the update was successful
         # update_button.config(text="Update Successful!")
-
 
     def view(self):
         view = "SELECT title, number, description FROM warehouse"  # Martins
