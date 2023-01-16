@@ -1,4 +1,4 @@
-# Šī ir CRUD programma grāmatu noliktavai ar Mysql datubāzi
+# Šī ir CRUD programma grāmatu noliktavai ar TKinter GUI un Mysql datubāzi.
 
 import re
 import mysql.connector as mysql
