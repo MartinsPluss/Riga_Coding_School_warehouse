@@ -1,3 +1,4 @@
+
 # Šī ir CRUD programma grāmatu noliktavai ar TKinter GUI un Mysql datubāzi.
 
 import re
@@ -7,7 +8,6 @@ from tkinter import ttk
 from tkinter import messagebox
 
 # Definē objektu
-
 
 class Db:
 
@@ -26,7 +26,7 @@ class Db:
             host="localhost",
             user="root",
             database="test",
-            password="qwerty123"
+            password="parole"
         )
         self.cursor = self.conn.cursor()
 
@@ -35,6 +35,7 @@ class Db:
         self.column1_input = Entry(self.app)
         self.column2_input = Entry(self.app)
         self.column3_input = Entry(self.app)
+
 
         self.column1_label = Label(self.app, text="Nosaukums:")  
         self.column2_label = Label(self.app, text="Skaits:")
@@ -81,7 +82,10 @@ class Db:
 
         # Ievietošanas funkcija
 
+
     def insert(self):
+
+        # Get the values from the input fields
 
         if self.is_valid_title(self.column1_input.get().strip()):
             title = self.column1_input.get().strip()
@@ -102,6 +106,7 @@ class Db:
         print("New records added")
 
         self.view()
+
 
         # Labošanas funkcija
 
@@ -129,6 +134,7 @@ class Db:
 
     def view(self):
         view = "SELECT title, number, description FROM warehouse"  
+
         self.cursor.execute(view)
         results = self.cursor.fetchall()
 
@@ -159,6 +165,7 @@ class Db:
             results_text_description.insert(END, result[2])
             results_text_description.insert(END, "\n")
 
+
         self.app.columnconfigure(4, weight=1, minsize=50)
         self.app.columnconfigure(5, weight=1, minsize=50)
         self.app.columnconfigure(6, weight=1, minsize=50)
@@ -173,6 +180,8 @@ class Db:
         self.cursor.execute(delete, (title,))
         self.conn.commit()
         print("Deleted")  
+
+        self.view()
 
         self.view()
 
