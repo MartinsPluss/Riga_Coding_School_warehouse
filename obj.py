@@ -17,8 +17,8 @@ class Db:
         h = self.app.winfo_screenheight()
         self.app.columnconfigure(4, weight=1)
         self.app.rowconfigure(3, weight=1)
-        self.app.title("Gramatu noliktava")  # Martins
-        self.app.geometry(f"{w}x{h}")  # Martins
+        self.app.title("Gramatu noliktava")  
+        self.app.geometry(f"{w}x{h}")  
 
         # Datubāzes savienojums
 
@@ -36,7 +36,7 @@ class Db:
         self.column2_input = Entry(self.app)
         self.column3_input = Entry(self.app)
 
-        self.column1_label = Label(self.app, text="Nosaukums:")  # Martins
+        self.column1_label = Label(self.app, text="Nosaukums:")  
         self.column2_label = Label(self.app, text="Skaits:")
         self.column3_label = Label(self.app, text="Apraksts:")
 
@@ -51,7 +51,7 @@ class Db:
 
         self.insert_button = ttk.Button(
             self.app, text="Ievietot", command=self.insert)
-        self.insert_button.grid(row=0, column=3, padx=10)   # Martins
+        self.insert_button.grid(row=0, column=3, padx=10)   
 
         self.update_button = ttk.Button(
             self.app, text="Labot", command=self.update_database)
@@ -128,7 +128,7 @@ class Db:
         # apskatīšanas funkcija
 
     def view(self):
-        view = "SELECT title, number, description FROM warehouse"  # Martins
+        view = "SELECT title, number, description FROM warehouse"  
         self.cursor.execute(view)
         results = self.cursor.fetchall()
 
@@ -172,7 +172,7 @@ class Db:
         delete = "DELETE FROM warehouse WHERE title=%s"
         self.cursor.execute(delete, (title,))
         self.conn.commit()
-        print("Deleted")  # Martins
+        print("Deleted")  
 
         self.view()
 
