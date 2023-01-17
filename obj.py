@@ -25,7 +25,7 @@ class Db:
             host="localhost",
             user="root",
             database="test",
-            password="qwerty123"
+            password="xxx"
         )
         self.cursor = self.conn.cursor()
 
