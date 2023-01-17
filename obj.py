@@ -7,6 +7,7 @@ from tkinter import messagebox
 
 class Db:
 
+    # Definē objektu
     def __init__(self):
         # Create the main Tkinter window
         self.app = Tk()
@@ -29,12 +30,17 @@ class Db:
         self.cursor = self.conn.cursor()
 
         # Create the input fields for the book title, number, and description
+
         self.column1_input = Entry(self.app)
         self.column2_input = Entry(self.app)
         self.column3_input = Entry(self.app)
 
         # Create the labels for the input fields
         self.column1_label = Label(self.app, text="Nosaukums:")
+
+        # Create the labels for the input fields
+        self.column1_label = Label(self.app, text="Nosaukums:")  # Martins
+
         self.column2_label = Label(self.app, text="Skaits:")
         self.column3_label = Label(self.app, text="Apraksts:")
 
@@ -49,7 +55,14 @@ class Db:
         # Create the buttons for inserting, updating, viewing, and deleting books
         self.insert_button = ttk.Button(
             self.app, text="Ievietot", command=self.insert)
-        self.insert_button.grid(row=0, column=3, padx=10)   # Martins
+        self.insert_button.grid(row=0, column=3, padx=10)  # Martins
+
+        # Create the buttons for inserting, updating, viewing, and deleting book
+        # Pogas
+
+        self.insert_button = ttk.Button(
+            self.app, text="Ievietot", command=self.insert)
+        self.insert_button.grid(row=0, column=3, padx=10)
 
         self.update_button = ttk.Button(
             self.app, text="Labot", command=self.update_database)
@@ -76,11 +89,15 @@ class Db:
         return bool(re.match(r'^[A-Za-z0-9\sĀČĢĶĻŅŠŪŽāčģīķļņšūž]+$', input_string))
 
     def is_number(self, input_string):
-        # Check if the input string is a number using a regular expression1
+
+        # Check if the input string is a number using a regular expression
+
         return bool(re.match(r'^\d+$', input_string))
 
     def insert(self):
         # Get the values from the input fields
+        # Check if the title input is valid
+        # Ievietošanas funkcija
 
         # Check if the title input is valid
         if self.is_valid_title(self.column1_input.get().strip()):
@@ -108,6 +125,7 @@ class Db:
         self.view()
 
     def update_database(self):
+        # Labošanas funkcija
 
         # Get the title input and assign it to a variable
         title = self.column1_input.get().strip()
@@ -130,8 +148,10 @@ class Db:
         self.view()
 
     def view(self):
+
         # Retrieve all rows from the warehouse table
         view = "SELECT title, number, description FROM warehouse"  # Martins
+
         self.cursor.execute(view)
         self.results = self.cursor.fetchall()
 
@@ -171,6 +191,7 @@ class Db:
     def delete_item(self):
 
         # Get the title input and assign it to a variable
+
         title = self.column1_input.get()
 
         # creates a list of titles and checks if the title to delete is present in the list
@@ -179,11 +200,14 @@ class Db:
             messagebox.showerror(
                 "Kļūda", "Grāmatas ar tādu nosaukumu nav sarakstā!")
 
+            messagebox.showerror("Kļūda", "Grāmatas ar tādu nosauku nav sarakstā!")
+
         # Delete the row in the warehouse table where the title matches the input
         delete = "DELETE FROM warehouse WHERE title=%s"
         self.cursor.execute(delete, (title,))
         self.conn.commit()
-        print("Deleted")  # Martins
+
+        print("Deleted")
 
         # Refresh the view
         self.view()
